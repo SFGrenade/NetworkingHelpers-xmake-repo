@@ -1,0 +1,24 @@
+package("networkhelper")
+    set_homepage("https://github.com/SFGrenade/NetworkHelper/")
+    set_description("A helper to use nng and bitsery together")
+    set_license("MPL-2.0")
+
+    set_urls("https://github.com/SFGrenade/NetworkHelper/archive/refs/tags/v$(version).tar.gz",
+             "https://github.com/SFGrenade/NetworkHelper.git")
+
+    add_deps("bitsery")
+    add_deps("nng")
+
+    on_install("windows", "macosx", "linux", function (package)
+        local configs = {}
+        import("package.tools.xmake").install(package, configs)
+    end)
+
+    on_test(function (package)
+        assert(package:check_cxxsnippets({test = [[
+            void test() {
+                NetworkHelper::ReqRep network( "tcp://127.0.0.1:13337", false );
+                network.run();
+            }
+        ]]}, {configs = {languages = "c++17"}, includes = "networkHelper/reqRep.hpp"}))
+    end)
