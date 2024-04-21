@@ -22,5 +22,5 @@ package("networkinghelper")
                 NetworkingHelper ::ReqRep network( "tcp://127.0.0.1:13337", false );
                 network.run();
             }
-        ]]}, {configs = {languages = "c++17"}, includes = "networkingHelper /reqRep.hpp"}))
+        ]]}, {configs = {languages = "c++17"}, includes = "networkingHelper/reqRep.hpp"}))
     end)
