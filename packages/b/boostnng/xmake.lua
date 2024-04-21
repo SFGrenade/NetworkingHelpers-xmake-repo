@@ -1,10 +1,10 @@
 package("boostnng")
-    set_homepage("https://github.com/SFGrenade/BoostNng/")
+    set_homepage("https://github.com/SFGrenade/BoostNng-Cpp/")
     set_description("A helper to use zeromq and protobuf together")
     set_license("MPL-2.0")
 
-    set_urls("https://github.com/SFGrenade/BoostNng/archive/refs/tags/v$(version).tar.gz",
-             "https://github.com/SFGrenade/BoostNng.git")
+    set_urls("https://github.com/SFGrenade/BoostNng-Cpp/archive/refs/tags/v$(version).tar.gz",
+             "https://github.com/SFGrenade/BoostNng-Cpp.git")
 
     add_deps("boost")
     add_deps("nng")
