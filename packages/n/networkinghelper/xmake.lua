@@ -6,6 +6,8 @@ package("networkhelper")
     set_urls("https://github.com/SFGrenade/NetworkHelper/archive/refs/tags/v$(version).tar.gz",
              "https://github.com/SFGrenade/NetworkHelper.git")
 
+    add_versions("0.2", "fdaaae8d3348aebcd4d53db40db1191c5f432eeffb6bcc76a216a95987f88d83")
+
     add_deps("bitsery")
     add_deps("nng")
 
