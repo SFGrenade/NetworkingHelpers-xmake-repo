@@ -1,10 +1,10 @@
-package("networkhelper")
-    set_homepage("https://github.com/SFGrenade/NetworkHelper/")
+package("networkinghelper")
+    set_homepage("https://github.com/NetworkingHelpers/NetworkingHelper-Cpp/")
     set_description("A helper to use nng and bitsery together")
     set_license("MPL-2.0")
 
-    set_urls("https://github.com/SFGrenade/NetworkHelper/archive/refs/tags/v$(version).tar.gz",
-             "https://github.com/SFGrenade/NetworkHelper.git")
+    set_urls("https://github.com/NetworkingHelpers/NetworkingHelper-Cpp/archive/refs/tags/v$(version).tar.gz",
+             "https://github.com/NetworkingHelpers/NetworkingHelper-Cpp.git")
 
     add_versions("0.2", "fdaaae8d3348aebcd4d53db40db1191c5f432eeffb6bcc76a216a95987f88d83")
 
@@ -19,8 +19,8 @@ package("networkhelper")
     on_test(function (package)
         assert(package:check_cxxsnippets({test = [[
             void test() {
-                NetworkHelper::ReqRep network( "tcp://127.0.0.1:13337", false );
+                NetworkingHelper ::ReqRep network( "tcp://127.0.0.1:13337", false );
                 network.run();
             }
-        ]]}, {configs = {languages = "c++17"}, includes = "networkHelper/reqRep.hpp"}))
+        ]]}, {configs = {languages = "c++17"}, includes = "networkingHelper /reqRep.hpp"}))
     end)
