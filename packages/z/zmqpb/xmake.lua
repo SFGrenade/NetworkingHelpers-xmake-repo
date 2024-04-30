@@ -11,15 +11,17 @@ package("zmqpb")
     add_versions("0.4", "7c0001db73b19e65b007adf6c9c5092c3589f043ab3e95a16b3ec2b2a87fa244")
     add_versions("0.5", "d177c3b87e367932973da20b72376d1320c7501e0a2175c929d4c5e1f06f68ad")
     add_versions("0.6", "f8c37950ba318d5b6383f082d439139548d9e2d5c29a767fd0ac7d6dbbe020b7")
+    add_versions("0.7", "cca033f3c0a86a3329a0bb631dc133d34c4825af48ebf4a9e0c7f72954ad0bf5")
 
     add_deps("cppzmq")
     add_deps("protobuf-cpp")
-    -- protobuf needs it and somehow just doesn't publicizes the linkage
-    add_deps( "utf8_range" )
 
     on_load("windows", "macosx", "linux", function (package)
         if not package:gitref() and package:version():lt("0.3") then
             package:add("deps", "fmt")
+        end
+        if not package:gitref() and package:version():lt("0.7") then
+            package:add("deps", "utf8_range")
         end
     end)
 
