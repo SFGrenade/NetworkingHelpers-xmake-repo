@@ -9,8 +9,21 @@ package("boostnng")
     add_deps("boost")
     add_deps("nng")
 
+    add_configs("shared", {description = "Build shared library.", default = true, type = "boolean", readonly = true})
+
+    on_load("windows", "macosx", "linux", function (package)
+        if package:gitref() or package:version():gt("0.8") then
+            package:add("deps", "hedley")
+        end
+        if package:config("shared") then
+            package:add("defines", "BOOSTNNG_IS_SHARED")
+        end
+    end)
+
     on_install("windows", "macosx", "linux", function (package)
-        local configs = {}
+        local configs = {
+            kind = package:config("shared") and "shared" or "static",
+        }
         import("package.tools.xmake").install(package, configs)
     end)
 

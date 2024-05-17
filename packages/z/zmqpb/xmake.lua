@@ -1,5 +1,5 @@
 package("zmqpb")
-    set_homepage("https://github.com/SFGrenade/ZmqPb-Cpp/")
+    set_homepage("https://github.com/SFGrenade/ZmqPb/")
     set_description("A helper to use zeromq and protobuf together")
     set_license("MPL-2.0")
 
@@ -13,18 +13,26 @@ package("zmqpb")
 
     add_deps("cppzmq")
     add_deps("protobuf-cpp")
+    add_deps("utf8_range")
+
+    add_configs("shared", {description = "Build shared library.", default = true, type = "boolean"})
 
     on_load("windows", "macosx", "linux", function (package)
         if not package:gitref() and package:version():lt("0.3") then
             package:add("deps", "fmt")
         end
-        if package:gitref() or package:version():ge("0.7") then
-            package:add("deps", "utf8_range")
+        if package:gitref() or package:version():gt("0.8") then
+            package:add("deps", "hedley")
+        end
+        if package:config("shared") then
+            package:add("defines", "ZMQPB_IS_SHARED")
         end
     end)
 
     on_install("windows", "macosx", "linux", function (package)
-        local configs = {}
+        local configs = {
+            kind = package:config("shared") and "shared" or "static",
+        }
         import("package.tools.xmake").install(package, configs)
     end)
 
@@ -35,7 +43,7 @@ package("zmqpb")
                     ZmqPb::ReqRep network( "tcp://127.0.0.1:13337", false );
                     network.run();
                 }
-            ]]}, {configs = {languages = "c++17"}, includes = "zmqPb/reqRep.hpp"}))
+            ]]}, {configs = {languages = "c++14"}, includes = "zmqPb/reqRep.hpp"}))
         else
             assert(package:check_cxxsnippets({test = [[
                 void test() {
